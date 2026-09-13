@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+# Build the Vite app (apps/web) and publish its dist/ to GitHub Pages on every push to main.
+# Pages must be set to "GitHub Actions" as its source (Settings → Pages → Build and
+# deployment → Source). Served as a project site at libreble.github.io/multimeter/, so the
+# repo must be named `multimeter` (Vite `base` is /multimeter/ to match).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; let a newer push supersede an in-flight run.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      # Version comes from package.json "packageManager" (pnpm@9.15.9). Don't also set `version`
+      # here — pnpm/action-setup errors on a double declaration (ERR_PNPM_BAD_PM_VERSION).
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter web build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: apps/web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

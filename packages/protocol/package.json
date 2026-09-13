@@ -1,0 +1,69 @@
+{
+  "name": "@ble-multimeter/protocol",
+  "version": "0.0.1",
+  "description": "Pure, I/O-free core for BLE multimeters: Reading model, uni-t decode/framing, stats/CSV, and the device-driver registry.",
+  "author": "mannes <info@mbtech.nl>",
+  "license": "MIT",
+  "keywords": [
+    "multimeter",
+    "dmm",
+    "ble",
+    "bluetooth",
+    "web-bluetooth",
+    "uni-t",
+    "ut60bt",
+    "protocol",
+    "decode",
+    "parser"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libreble/multimeter.git",
+    "directory": "packages/protocol"
+  },
+  "homepage": "https://github.com/libreble/multimeter/tree/main/packages/protocol#readme",
+  "bugs": {
+    "url": "https://github.com/libreble/multimeter/issues"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/mannes"
+    },
+    {
+      "type": "ko-fi",
+      "url": "https://ko-fi.com/mannes"
+    }
+  ],
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.8"
+  }
+}

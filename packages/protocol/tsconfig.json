@@ -1,0 +1,10 @@
+{
+  "extends": "@mbtech-nl/tsconfig/browser",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force"
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,34 @@
+name: CI
+
+# Typecheck, lint, format-check and tests (with coverage) across the pnpm workspace on every
+# push to main and on PRs. Coverage is uploaded to Codecov.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      # Version comes from package.json "packageManager" (pnpm@9.15.9). Don't also set `version`
+      # here — pnpm/action-setup errors on a double declaration (ERR_PNPM_BAD_PM_VERSION).
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm coverage
+      - uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+          fail_ci_if_error: false

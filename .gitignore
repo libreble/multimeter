@@ -1,0 +1,16 @@
+node_modules
+dist
+coverage
+*.local
+.DS_Store
+*.tsbuildinfo
+
+# Markdown is ignored by default — internal notes, logs and planning docs stay on disk only.
+# Public docs are re-included explicitly below; to track a new .md, add a matching `!` line.
+*.md
+!/README.md
+!/docs/HARDWARE.md
+!/docs/protocols/*.md
+!/packages/*/README.md
+
+captures/

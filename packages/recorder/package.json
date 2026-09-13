@@ -1,0 +1,73 @@
+{
+  "name": "@ble-multimeter/recorder",
+  "version": "0.0.1",
+  "description": "Bluetooth-independent recording engine + IndexedDB session store for BLE multimeters.",
+  "author": "mannes <info@mbtech.nl>",
+  "license": "MIT",
+  "keywords": [
+    "multimeter",
+    "dmm",
+    "ble",
+    "bluetooth",
+    "web-bluetooth",
+    "uni-t",
+    "ut60bt",
+    "indexeddb",
+    "recorder",
+    "logging"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libreble/multimeter.git",
+    "directory": "packages/recorder"
+  },
+  "homepage": "https://github.com/libreble/multimeter/tree/main/packages/recorder#readme",
+  "bugs": {
+    "url": "https://github.com/libreble/multimeter/issues"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/mannes"
+    },
+    {
+      "type": "ko-fi",
+      "url": "https://ko-fi.com/mannes"
+    }
+  ],
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ble-multimeter/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "fake-indexeddb": "^6.2.5",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.8"
+  }
+}

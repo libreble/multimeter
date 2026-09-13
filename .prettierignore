@@ -1,0 +1,9 @@
+dist
+coverage
+node_modules
+package-lock.json
+pnpm-lock.yaml
+assets
+public
+# Markdown is not format-enforced (and process/planning docs below are not committed at all).
+*.md

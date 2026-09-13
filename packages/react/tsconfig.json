@@ -1,0 +1,12 @@
+{
+  "extends": "@mbtech-nl/tsconfig/browser",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "types": ["web-bluetooth"]
+  },
+  "include": ["src"]
+}
