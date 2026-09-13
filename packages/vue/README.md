@@ -1,19 +1,19 @@
-# @ble-multimeter/vue
+# @libreble/multimeter-vue
 
 > Vue composables for BLE multimeters: live readout, recording, and session management with almost no glue.
 
-[![npm](https://img.shields.io/npm/v/@ble-multimeter/vue)](https://www.npmjs.com/package/@ble-multimeter/vue)
-[![license](https://img.shields.io/npm/l/@ble-multimeter/vue)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/@libreble/multimeter-vue)](https://www.npmjs.com/package/@libreble/multimeter-vue)
+[![license](https://img.shields.io/npm/l/@libreble/multimeter-vue)](./LICENSE)
 
-Thin Vue composables over the framework-agnostic engines in `@ble-multimeter/web-bluetooth`
-and `@ble-multimeter/recorder`, returning reactive `computed` refs. The same four hooks as
-[`@ble-multimeter/react`](https://www.npmjs.com/package/@ble-multimeter/react), over the same
+Thin Vue composables over the framework-agnostic engines in `@libreble/multimeter-web-bluetooth`
+and `@libreble/multimeter-recorder`, returning reactive `computed` refs. The same four hooks as
+[`@libreble/multimeter-react`](https://www.npmjs.com/package/@libreble/multimeter-react), over the same
 engines.
 
 ## Install
 
 ```sh
-npm install @ble-multimeter/vue
+npm install @libreble/multimeter-vue
 ```
 
 Peer dependency: **Vue ≥ 3.4**. Connecting to real hardware needs Web Bluetooth — a
@@ -23,7 +23,7 @@ Chromium-based browser in a secure context (HTTPS or `localhost`).
 
 ```vue
 <script setup lang="ts">
-import { useMeter, useRecorder } from '@ble-multimeter/vue';
+import { useMeter, useRecorder } from '@libreble/multimeter-vue';
 
 const meter = useMeter();
 const recorder = useRecorder(meter.reading); // pass the reactive reading ref
@@ -58,15 +58,15 @@ Each composable creates its own engine instance and disposes it on scope teardow
 
 - Vue ≥ 3.4.
 - Real connections: Chromium-based browser, secure context, user gesture (see
-  `@ble-multimeter/web-bluetooth`). Demo mode works everywhere.
-- Devices: UNI-T UT60BT (via `@ble-multimeter/protocol`).
+  `@libreble/multimeter-web-bluetooth`). Demo mode works everywhere.
+- Devices: UNI-T UT60BT (via `@libreble/multimeter-protocol`).
 
 ## Related packages
 
-- [`@ble-multimeter/protocol`](https://www.npmjs.com/package/@ble-multimeter/protocol) — pure decode/model core.
-- [`@ble-multimeter/web-bluetooth`](https://www.npmjs.com/package/@ble-multimeter/web-bluetooth) — transport + `MeterSession`.
-- [`@ble-multimeter/recorder`](https://www.npmjs.com/package/@ble-multimeter/recorder) — recording engine + IndexedDB store.
-- [`@ble-multimeter/react`](https://www.npmjs.com/package/@ble-multimeter/react) — the same four hooks as React hooks.
+- [`@libreble/multimeter-protocol`](https://www.npmjs.com/package/@libreble/multimeter-protocol) — pure decode/model core.
+- [`@libreble/multimeter-web-bluetooth`](https://www.npmjs.com/package/@libreble/multimeter-web-bluetooth) — transport + `MeterSession`.
+- [`@libreble/multimeter-recorder`](https://www.npmjs.com/package/@libreble/multimeter-recorder) — recording engine + IndexedDB store.
+- [`@libreble/multimeter-react`](https://www.npmjs.com/package/@libreble/multimeter-react) — the same four hooks as React hooks.
 
 Monorepo: <https://github.com/libreble/multimeter>
 

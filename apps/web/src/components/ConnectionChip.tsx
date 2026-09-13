@@ -2,7 +2,7 @@
 // meter card's header. The colored status dot is decorative — the state is always also
 // spelled out in text for AT users. (Backlight moved to the MeterControls "Light" button, so the
 // old per-device kebab menu is gone.)
-import type { Meter, MeterState } from '@ble-multimeter/react';
+import type { Meter, MeterState } from '@libreble/multimeter-react';
 
 const STATE_LABEL: Record<MeterState, string> = {
   unsupported: 'unsupported',

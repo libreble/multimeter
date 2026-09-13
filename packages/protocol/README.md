@@ -1,28 +1,28 @@
-# @ble-multimeter/protocol
+# @libreble/multimeter-protocol
 
 > Pure, I/O-free core for BLE multimeters: the `Reading` model, UNI-T decode/framing, stats/CSV, and a device-driver registry.
 
-[![npm](https://img.shields.io/npm/v/@ble-multimeter/protocol)](https://www.npmjs.com/package/@ble-multimeter/protocol)
-[![license](https://img.shields.io/npm/l/@ble-multimeter/protocol)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/@libreble/multimeter-protocol)](https://www.npmjs.com/package/@libreble/multimeter-protocol)
+[![license](https://img.shields.io/npm/l/@libreble/multimeter-protocol)](./LICENSE)
 
-The foundation package for the `@ble-multimeter/*` stack. It turns raw bytes from a
+The foundation package for the `@libreble/multimeter-*` stack. It turns raw bytes from a
 Bluetooth multimeter into a structured `Reading` and provides the helpers built on top of
 that model (framing/checksums, statistics, CSV export, decimation, segmenting).
 
 It is **completely I/O-free**: no DOM, no Web Bluetooth, no React/Vue, no IndexedDB. It runs
 in the browser and in Node, and has zero runtime dependencies. The actual transport lives in
-[`@ble-multimeter/web-bluetooth`](https://www.npmjs.com/package/@ble-multimeter/web-bluetooth).
+[`@libreble/multimeter-web-bluetooth`](https://www.npmjs.com/package/@libreble/multimeter-web-bluetooth).
 
 ## Install
 
 ```sh
-npm install @ble-multimeter/protocol
+npm install @libreble/multimeter-protocol
 ```
 
 ## Quick start
 
 ```ts
-import { decode, toCsv, computeStats } from '@ble-multimeter/protocol';
+import { decode, toCsv, computeStats } from '@libreble/multimeter-protocol';
 
 // `bytes` is one 19-byte measurement frame off the wire (Uint8Array).
 const reading = decode(bytes, Date.now());
@@ -63,10 +63,10 @@ Everything is fully typed; see the bundled `.d.ts`.
 
 ## Related packages
 
-- [`@ble-multimeter/web-bluetooth`](https://www.npmjs.com/package/@ble-multimeter/web-bluetooth) — Web Bluetooth transport + `MeterSession`.
-- [`@ble-multimeter/recorder`](https://www.npmjs.com/package/@ble-multimeter/recorder) — recording engine + IndexedDB store.
-- [`@ble-multimeter/react`](https://www.npmjs.com/package/@ble-multimeter/react) — React hooks.
-- [`@ble-multimeter/vue`](https://www.npmjs.com/package/@ble-multimeter/vue) — Vue composables.
+- [`@libreble/multimeter-web-bluetooth`](https://www.npmjs.com/package/@libreble/multimeter-web-bluetooth) — Web Bluetooth transport + `MeterSession`.
+- [`@libreble/multimeter-recorder`](https://www.npmjs.com/package/@libreble/multimeter-recorder) — recording engine + IndexedDB store.
+- [`@libreble/multimeter-react`](https://www.npmjs.com/package/@libreble/multimeter-react) — React hooks.
+- [`@libreble/multimeter-vue`](https://www.npmjs.com/package/@libreble/multimeter-vue) — Vue composables.
 
 Monorepo: <https://github.com/libreble/multimeter>
 

@@ -3,10 +3,10 @@
 // snapshot as computed refs. Mirrors the React useRecorder over the same engine.
 
 import { computed, shallowRef, watch, toValue, onScopeDispose, type MaybeRefOrGetter } from 'vue';
-import type { Reading } from '@ble-multimeter/protocol';
-import { RecorderSession, type ChannelSpec } from '@ble-multimeter/recorder';
+import type { Reading } from '@libreble/multimeter-protocol';
+import { RecorderSession, type ChannelSpec } from '@libreble/multimeter-recorder';
 
-export type { RecState, SegmentInfo, ChannelView } from '@ble-multimeter/recorder';
+export type { RecState, SegmentInfo, ChannelView } from '@libreble/multimeter-recorder';
 
 // The minimal per-channel shape the recorder needs (matches the React binding's RecordableChannel).
 export interface RecordableChannel {

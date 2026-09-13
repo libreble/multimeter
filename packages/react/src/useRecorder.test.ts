@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useRecorder, type RecordableChannel } from './useRecorder';
 import { makeReading } from './test-readings';
-import type { Reading } from '@ble-multimeter/protocol';
+import type { Reading } from '@libreble/multimeter-protocol';
 
 // Drive the hook by re-rendering with a fresh channels array carrying a new reading each time,
 // like the live multi-channel stream does. One meter channel ('v') = the N=1 case.

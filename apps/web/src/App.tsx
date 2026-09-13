@@ -9,8 +9,8 @@
 // headline two-device scenario, exercisable without hardware.
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { useMeters, useRecorder, useSessions, usePinSession } from '@ble-multimeter/react';
-import type { Meters, MeterChannel } from '@ble-multimeter/react';
+import { useMeters, useRecorder, useSessions, usePinSession } from '@libreble/multimeter-react';
+import type { Meters, MeterChannel } from '@libreble/multimeter-react';
 import { useTheme } from './hooks/useTheme';
 import { useChartColor } from './hooks/useChartColor';
 import { seriesStroke } from './lib/chartColors';

@@ -14,8 +14,8 @@ import {
   derivedFormula,
   deriveUnit,
   type Reading,
-} from '@ble-multimeter/protocol';
-import type { DerivedOp, MeterControl } from '@ble-multimeter/protocol';
+} from '@libreble/multimeter-protocol';
+import type { DerivedOp, MeterControl } from '@libreble/multimeter-protocol';
 import { MeterSession, type MeterSnapshot, type MeterState } from './session';
 import { demoKind, DEMO_PROFILES, DEFAULT_DEMO_PROFILE, type DemoProfile } from './demo';
 

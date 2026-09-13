@@ -15,8 +15,8 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState }
 import uPlot from 'uplot';
 import type { AlignedData, Axis, Options, Scale, Series } from 'uplot';
 import 'uplot/dist/uPlot.min.css';
-import { decimate } from '@ble-multimeter/protocol';
-import type { Sample } from '@ble-multimeter/protocol';
+import { decimate } from '@libreble/multimeter-protocol';
+import type { Sample } from '@libreble/multimeter-protocol';
 
 const MAX_POINTS = 2000; // render cap per channel; full resolution lives in IndexedDB
 

@@ -1,5 +1,5 @@
 {
-  "name": "@ble-multimeter/react",
+  "name": "@libreble/multimeter-react",
   "version": "0.0.1",
   "description": "React hooks for BLE multimeters: useMeter/useRecorder/useSessions/usePinSession over the multimeter engines.",
   "author": "mannes <info@mbtech.nl>",
@@ -64,9 +64,9 @@
     "react": ">=18"
   },
   "dependencies": {
-    "@ble-multimeter/protocol": "workspace:*",
-    "@ble-multimeter/recorder": "workspace:*",
-    "@ble-multimeter/web-bluetooth": "workspace:*"
+    "@libreble/multimeter-protocol": "workspace:*",
+    "@libreble/multimeter-recorder": "workspace:*",
+    "@libreble/multimeter-web-bluetooth": "workspace:*"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",

@@ -3,7 +3,7 @@
 // comes from storage; this just holds the list + the currently-opened session and exposes a
 // subscribe/getSnapshot the React/Vue bindings mirror. Extracted from the React useSessions hook.
 
-import { toCsv, type CsvChannel, type Reading, type Session } from '@ble-multimeter/protocol';
+import { toCsv, type CsvChannel, type Reading, type Session } from '@libreble/multimeter-protocol';
 import * as storage from './storage';
 import { downloadText, slug } from './download';
 

@@ -1,23 +1,23 @@
-# @ble-multimeter/recorder
+# @libreble/multimeter-recorder
 
 > Bluetooth-independent recording engine + IndexedDB session store for BLE multimeters.
 
-[![npm](https://img.shields.io/npm/v/@ble-multimeter/recorder)](https://www.npmjs.com/package/@ble-multimeter/recorder)
-[![license](https://img.shields.io/npm/l/@ble-multimeter/recorder)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/@libreble/multimeter-recorder)](https://www.npmjs.com/package/@libreble/multimeter-recorder)
+[![license](https://img.shields.io/npm/l/@libreble/multimeter-recorder)](./LICENSE)
 
-Records a stream of [`Reading`](https://www.npmjs.com/package/@ble-multimeter/protocol)s into
+Records a stream of [`Reading`](https://www.npmjs.com/package/@libreble/multimeter-protocol)s into
 sessions: a live buffer with running stats and quantity-change segmenting, batched persistence
 to **IndexedDB**, and browse/reopen/export of saved sessions. It also includes a per-item pin
 recorder and small file-download helpers.
 
 It is **decoupled from the transport** — feed it `Reading`s from anywhere (a live
 `MeterSession`, a replay, a test). Recorded sessions survive a page reload. Depends only on
-[`@ble-multimeter/protocol`](https://www.npmjs.com/package/@ble-multimeter/protocol).
+[`@libreble/multimeter-protocol`](https://www.npmjs.com/package/@libreble/multimeter-protocol).
 
 ## Install
 
 ```sh
-npm install @ble-multimeter/recorder
+npm install @libreble/multimeter-recorder
 ```
 
 > Persistence uses **IndexedDB** (browser). The engines themselves are pure and run anywhere;
@@ -26,7 +26,7 @@ npm install @ble-multimeter/recorder
 ## Quick start
 
 ```ts
-import { RecorderSession, SessionsStore, exportSessionCsv } from '@ble-multimeter/recorder';
+import { RecorderSession, SessionsStore, exportSessionCsv } from '@libreble/multimeter-recorder';
 
 const rec = new RecorderSession();
 
@@ -68,14 +68,14 @@ const csv = exportSessionCsv(opened);
 
 - Persistence: IndexedDB (any modern browser). Provide a shim to use in Node.
 - The engine logic is framework-agnostic and transport-independent.
-- Devices: data model comes from `@ble-multimeter/protocol` (UNI-T UT60BT and future drivers).
+- Devices: data model comes from `@libreble/multimeter-protocol` (UNI-T UT60BT and future drivers).
 
 ## Related packages
 
-- [`@ble-multimeter/protocol`](https://www.npmjs.com/package/@ble-multimeter/protocol) — pure decode/model core.
-- [`@ble-multimeter/web-bluetooth`](https://www.npmjs.com/package/@ble-multimeter/web-bluetooth) — Web Bluetooth transport + `MeterSession`.
-- [`@ble-multimeter/react`](https://www.npmjs.com/package/@ble-multimeter/react) — React hooks (`useRecorder`, `useSessions`, `usePinSession`).
-- [`@ble-multimeter/vue`](https://www.npmjs.com/package/@ble-multimeter/vue) — Vue composables.
+- [`@libreble/multimeter-protocol`](https://www.npmjs.com/package/@libreble/multimeter-protocol) — pure decode/model core.
+- [`@libreble/multimeter-web-bluetooth`](https://www.npmjs.com/package/@libreble/multimeter-web-bluetooth) — Web Bluetooth transport + `MeterSession`.
+- [`@libreble/multimeter-react`](https://www.npmjs.com/package/@libreble/multimeter-react) — React hooks (`useRecorder`, `useSessions`, `usePinSession`).
+- [`@libreble/multimeter-vue`](https://www.npmjs.com/package/@libreble/multimeter-vue) — Vue composables.
 
 Monorepo: <https://github.com/libreble/multimeter>
 

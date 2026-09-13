@@ -1,5 +1,5 @@
 {
-  "name": "@ble-multimeter/protocol",
+  "name": "@libreble/multimeter-protocol",
   "version": "0.0.1",
   "description": "Pure, I/O-free core for BLE multimeters: Reading model, uni-t decode/framing, stats/CSV, and the device-driver registry.",
   "author": "mannes <info@mbtech.nl>",

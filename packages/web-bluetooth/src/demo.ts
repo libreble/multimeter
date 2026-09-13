@@ -7,7 +7,7 @@
 // meters can synthesize different quantities at once — the V source + I source behind the
 // `?demo=power` two-device scenario. `demoReading(tSec, ts)` keeps the old single-DCV default.
 
-import { ACDC_FUNCTIONS, RANGE_UNITS, unitInfo, type Reading } from '@ble-multimeter/protocol';
+import { ACDC_FUNCTIONS, RANGE_UNITS, unitInfo, type Reading } from '@libreble/multimeter-protocol';
 
 // What flavour of demo the URL asks for. `single` = one DCV meter (simple screenshots);
 // `power` = a V source + an I source + a P=V×I derived channel (the headline scenario).

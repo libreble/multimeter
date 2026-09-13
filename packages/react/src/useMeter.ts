@@ -1,11 +1,11 @@
 // React binding for the MeterSession engine. A thin adapter: one session instance per mount,
 // mirrored into React via useSyncExternalStore. All connection logic lives in the engine
-// (@ble-multimeter/web-bluetooth) so this stays trivial — the Vue binding is the same
+// (@libreble/multimeter-web-bluetooth) so this stays trivial — the Vue binding is the same
 // shape over the same engine.
 
 import { useEffect, useRef, useSyncExternalStore } from 'react';
-import { MeterSession, type MeterState } from '@ble-multimeter/web-bluetooth';
-import type { MeterControl, Reading } from '@ble-multimeter/protocol';
+import { MeterSession, type MeterState } from '@libreble/multimeter-web-bluetooth';
+import type { MeterControl, Reading } from '@libreble/multimeter-protocol';
 
 export type { MeterState, MeterControl };
 

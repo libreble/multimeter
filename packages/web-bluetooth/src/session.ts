@@ -18,7 +18,7 @@ import {
   type FrameKind,
   type MeterControl,
   type Reading,
-} from '@ble-multimeter/protocol';
+} from '@libreble/multimeter-protocol';
 import { Transport } from './transport';
 import { isDemoMode, demoReadingFor, DEFAULT_DEMO_PROFILE, type DemoProfile } from './demo';
 

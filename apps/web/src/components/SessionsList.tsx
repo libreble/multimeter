@@ -6,9 +6,9 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Session } from '@ble-multimeter/protocol';
-import { computeStats, toSample } from '@ble-multimeter/protocol';
-import type { Sessions, OpenedChannel } from '@ble-multimeter/react';
+import type { Session } from '@libreble/multimeter-protocol';
+import { computeStats, toSample } from '@libreble/multimeter-protocol';
+import type { Sessions, OpenedChannel } from '@libreble/multimeter-react';
 import { MultiChart, type MultiChartHandle, type ChartSeries } from './MultiChart';
 import { StatsPanel } from './StatsPanel';
 import { ExportButtons } from './ExportButtons';

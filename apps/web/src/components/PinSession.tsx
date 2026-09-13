@@ -2,10 +2,10 @@
 // active pin session (auto-starting one on the first pin); Stop finalizes it. A pin session
 // is a normal recording, so the finished result lives in Recordings — this panel is just the
 // live capture controls plus a running list and the match-spread ("are these matched?") answer.
-import type { Reading } from '@ble-multimeter/protocol';
-import type { PinSession as PinSessionState } from '@ble-multimeter/react';
-import { toCsv } from '@ble-multimeter/protocol';
-import { downloadText, slug } from '@ble-multimeter/recorder';
+import type { Reading } from '@libreble/multimeter-protocol';
+import type { PinSession as PinSessionState } from '@libreble/multimeter-react';
+import { toCsv } from '@libreble/multimeter-protocol';
+import { downloadText, slug } from '@libreble/multimeter-recorder';
 
 function fmtNum(v: number): string {
   const abs = Math.abs(v);

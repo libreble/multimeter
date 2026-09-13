@@ -138,13 +138,13 @@ BLE-multimeter UI (in React **or** Vue) or a headless Node tool on top:
 
 | Package                               | What it is                                                                                                                                                                |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@ble-multimeter/protocol`      | Pure, I/O-free core: the `Reading` model + unit tables, the per-vendor decoders/framing, stats/decimate/CSV, and the device-`Driver` interface + registry. Zero deps; Node-safe. |
-| `@ble-multimeter/web-bluetooth` | Web Bluetooth `Transport` + the framework-agnostic `MeterSession` engine (connect · handshake · keep-alive · reconnect · demo).                                           |
-| `@ble-multimeter/recorder`      | Bluetooth-independent `RecorderSession` · `SessionsStore` · `PinRecorder` engines + the IndexedDB session store.                                                          |
-| `@ble-multimeter/react`         | React hooks: `useMeter` · `useRecorder` · `useSessions` · `usePinSession`.                                                                                                |
-| `@ble-multimeter/vue`           | The same four as Vue composables.                                                                                                                                         |
+| `@libreble/multimeter-protocol`      | Pure, I/O-free core: the `Reading` model + unit tables, the per-vendor decoders/framing, stats/decimate/CSV, and the device-`Driver` interface + registry. Zero deps; Node-safe. |
+| `@libreble/multimeter-web-bluetooth` | Web Bluetooth `Transport` + the framework-agnostic `MeterSession` engine (connect · handshake · keep-alive · reconnect · demo).                                           |
+| `@libreble/multimeter-recorder`      | Bluetooth-independent `RecorderSession` · `SessionsStore` · `PinRecorder` engines + the IndexedDB session store.                                                          |
+| `@libreble/multimeter-react`         | React hooks: `useMeter` · `useRecorder` · `useSessions` · `usePinSession`.                                                                                                |
+| `@libreble/multimeter-vue`           | The same four as Vue composables.                                                                                                                                         |
 
-`apps/web` consumes `@ble-multimeter/react`, so the app dogfoods the binding it ships.
+`apps/web` consumes `@libreble/multimeter-react`, so the app dogfoods the binding it ships.
 The packages are structured to be publishable (per-package build → ESM + types) but aren't on
 npm yet.
 

@@ -1,9 +1,9 @@
-// Vue binding for the MeterSession engine. Mirrors @ble-multimeter/react's useMeter over
+// Vue binding for the MeterSession engine. Mirrors @libreble/multimeter-react's useMeter over
 // the same framework-agnostic engine — a shallowRef snapshot exposed as computed refs.
 
 import { computed, shallowRef, onScopeDispose } from 'vue';
-import { MeterSession, type MeterState } from '@ble-multimeter/web-bluetooth';
-import type { MeterControl, Reading } from '@ble-multimeter/protocol';
+import { MeterSession, type MeterState } from '@libreble/multimeter-web-bluetooth';
+import type { MeterControl, Reading } from '@libreble/multimeter-protocol';
 
 export type { MeterState, MeterControl };
 

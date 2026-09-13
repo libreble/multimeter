@@ -2,8 +2,8 @@
 // formula (e.g. "P=V×I"), and a "stale" badge when an input lagged or went non-live. The value is a
 // gap (—) when stale or any input is OL. Remove drops the derived channel.
 
-import type { DerivedChannel, Meters } from '@ble-multimeter/react';
-import { OP_SYMBOL } from '@ble-multimeter/protocol';
+import type { DerivedChannel, Meters } from '@libreble/multimeter-react';
+import { OP_SYMBOL } from '@libreble/multimeter-protocol';
 
 export function DerivedCard({ channel, meters }: { channel: DerivedChannel; meters: Meters }) {
   const r = channel.reading;

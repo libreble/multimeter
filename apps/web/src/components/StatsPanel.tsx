@@ -3,7 +3,7 @@
 // but better — and reset-able on demand. Values are in the normalized base unit (same as
 // the chart) so they stay consistent across range changes.
 
-import type { Stats } from '@ble-multimeter/protocol';
+import type { Stats } from '@libreble/multimeter-protocol';
 
 interface Props {
   stats: Stats;

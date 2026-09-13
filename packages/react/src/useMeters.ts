@@ -1,7 +1,7 @@
 // React binding for the MetersSession coordinator (Phase 7) — replaces useMeter. A thin adapter:
 // one MetersSession per mount, mirrored into React via useSyncExternalStore. All multi-channel
 // logic (per-meter sessions, derived recompute, staleness, add/remove) lives in the engine
-// (@ble-multimeter/web-bluetooth); this just exposes its snapshot + bound mutators. Single meter
+// (@libreble/multimeter-web-bluetooth); this just exposes its snapshot + bound mutators. Single meter
 // is just N=1 — there is no separate single-meter hook anymore.
 
 import { useEffect, useRef, useSyncExternalStore } from 'react';
@@ -10,7 +10,7 @@ import {
   MeterSession,
   type MetersSnapshot,
   type DerivedConfig,
-} from '@ble-multimeter/web-bluetooth';
+} from '@libreble/multimeter-web-bluetooth';
 
 export type {
   MetersSnapshot,
@@ -18,7 +18,7 @@ export type {
   MeterChannel,
   DerivedChannel,
   DerivedConfig,
-} from '@ble-multimeter/web-bluetooth';
+} from '@libreble/multimeter-web-bluetooth';
 
 export interface Meters extends MetersSnapshot {
   isDemo: boolean;

@@ -1,5 +1,5 @@
 {
-  "name": "@ble-multimeter/web-bluetooth",
+  "name": "@libreble/multimeter-web-bluetooth",
   "version": "0.0.1",
   "description": "Web Bluetooth transport + the framework-agnostic MeterSession engine for BLE multimeters.",
   "author": "mannes <info@mbtech.nl>",
@@ -60,7 +60,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@ble-multimeter/protocol": "workspace:*"
+    "@libreble/multimeter-protocol": "workspace:*"
   },
   "devDependencies": {
     "@types/web-bluetooth": "^0.0.21",

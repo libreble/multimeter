@@ -17,7 +17,7 @@ import {
   type Sample,
   type Session,
   type Stats,
-} from '@ble-multimeter/protocol';
+} from '@libreble/multimeter-protocol';
 import * as storage from './storage';
 import { newId } from './ids';
 

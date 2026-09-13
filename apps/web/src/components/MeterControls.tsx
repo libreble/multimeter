@@ -3,7 +3,7 @@
 // control in a sensible fixed order with friendly labels. Distinct from the client-side display
 // "Hold" toggle in App — these write a command to the physical meter.
 
-import type { MeterControl } from '@ble-multimeter/react';
+import type { MeterControl } from '@libreble/multimeter-react';
 
 // Display label + ordering for every known control. Render order follows this list; unknown/
 // unsupported controls are simply skipped.

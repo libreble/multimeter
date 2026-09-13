@@ -6,7 +6,7 @@ import 'fake-indexeddb/auto';
 import { describe, it, expect } from 'vitest';
 import { PinRecorder } from './pins';
 import { listSessions, getSession, readSamples } from './storage';
-import type { Reading } from '@ble-multimeter/protocol';
+import type { Reading } from '@libreble/multimeter-protocol';
 
 const noFlags = {
   max: false,

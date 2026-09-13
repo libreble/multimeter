@@ -6,7 +6,7 @@ import 'fake-indexeddb/auto';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { SessionsStore, exportSessionCsv } from './sessions';
 import { createSession, appendSamples, getSession, readSamples } from './storage';
-import type { ChannelInfo, Reading, Session } from '@ble-multimeter/protocol';
+import type { ChannelInfo, Reading, Session } from '@libreble/multimeter-protocol';
 
 // Add a meter ChannelInfo to a session row so open()/export can find the channel by id.
 const meterChannel = (id: string, label = id): ChannelInfo => ({

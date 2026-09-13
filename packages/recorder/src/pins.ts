@@ -12,7 +12,7 @@ import {
   type ChannelInfo,
   type Reading,
   type Session,
-} from '@ble-multimeter/protocol';
+} from '@libreble/multimeter-protocol';
 import * as storage from './storage';
 import { newId } from './ids';
 

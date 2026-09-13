@@ -4,7 +4,7 @@
 // dimmed when not. So you can *see* that HOLD is on, not just press it.
 
 import type { ReactNode } from 'react';
-import { modeLabel, type Reading } from '@ble-multimeter/protocol';
+import { modeLabel, type Reading } from '@libreble/multimeter-protocol';
 
 function Ann({ on, children }: { on: boolean; children: ReactNode }) {
   return (

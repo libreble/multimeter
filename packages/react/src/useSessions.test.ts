@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
-import type { Session } from '@ble-multimeter/protocol';
-import { storage } from '@ble-multimeter/recorder';
+import type { Session } from '@libreble/multimeter-protocol';
+import { storage } from '@libreble/multimeter-recorder';
 import { useSessions } from './useSessions';
 
 function makeSession(over: Partial<Session> = {}): Session {

@@ -14,7 +14,7 @@ import {
   deleteSession,
   renameSession,
 } from './storage';
-import type { Reading, Session } from '@ble-multimeter/protocol';
+import type { Reading, Session } from '@libreble/multimeter-protocol';
 
 const noFlags = {
   max: false,

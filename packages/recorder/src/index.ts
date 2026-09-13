@@ -1,8 +1,8 @@
-// @ble-multimeter/recorder — browser, Bluetooth-independent recording layer for BLE
+// @libreble/multimeter-recorder — browser, Bluetooth-independent recording layer for BLE
 // multimeters. Framework-agnostic engines (RecorderSession live buffer + stats + segmenting +
 // batched persistence; SessionsStore browse/reopen/export; PinRecorder per-item capture), the
 // IndexedDB session store, and small file-download helpers. Depends only on
-// @ble-multimeter/protocol; consumed by the React/Vue bindings and the app.
+// @libreble/multimeter-protocol; consumed by the React/Vue bindings and the app.
 
 export * as storage from './storage';
 export { downloadText, downloadBlob, slug } from './download';

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { effectScope, nextTick } from 'vue';
-import type { Reading } from '@ble-multimeter/protocol';
+import type { Reading } from '@libreble/multimeter-protocol';
 import { usePinSession } from './usePinSession';
 
 function reading(over: Partial<Reading> = {}): Reading {

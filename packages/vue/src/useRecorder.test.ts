@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { effectScope, ref, shallowRef, nextTick } from 'vue';
 import { useRecorder, type RecordableChannel } from './useRecorder';
 import { useMeter } from './useMeter';
-import type { Reading } from '@ble-multimeter/protocol';
+import type { Reading } from '@libreble/multimeter-protocol';
 
 function reading(over: Partial<Reading> = {}): Reading {
   return {

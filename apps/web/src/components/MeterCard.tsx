@@ -6,9 +6,9 @@
 // now lives in the MeterControls "Light" button, so the old per-card kebab/DeviceMenu is gone.)
 
 import { useState } from 'react';
-import type { MeterChannel, Meters } from '@ble-multimeter/react';
-import type { Meter, MeterControl } from '@ble-multimeter/react';
-import { gaugeFraction, gaugeFullScale } from '@ble-multimeter/protocol';
+import type { MeterChannel, Meters } from '@libreble/multimeter-react';
+import type { Meter, MeterControl } from '@libreble/multimeter-react';
+import { gaugeFraction, gaugeFullScale } from '@libreble/multimeter-protocol';
 import { ConnectionStatus } from './ConnectionChip';
 import { MeterControls } from './MeterControls';
 import { DialGauge } from './DialGauge';

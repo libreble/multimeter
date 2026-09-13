@@ -8,7 +8,7 @@
 // immutable per store, so the upgrade **deletes and recreates** the store — destructive, dropping
 // any pre-Phase-7 dev recordings (fine pre-1.0, no back-compat). DB_VERSION is bumped accordingly.
 
-import type { Reading, Session } from '@ble-multimeter/protocol';
+import type { Reading, Session } from '@libreble/multimeter-protocol';
 
 const DB_NAME = 'ut60bt';
 const DB_VERSION = 2; // bumped for the multi-channel re-key (destructive)

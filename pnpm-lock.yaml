@@ -50,13 +50,13 @@ importers:
 
   apps/web:
     dependencies:
-      '@ble-multimeter/protocol':
+      '@libreble/multimeter-protocol':
         specifier: workspace:*
         version: link:../../packages/protocol
-      '@ble-multimeter/react':
+      '@libreble/multimeter-react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@ble-multimeter/recorder':
+      '@libreble/multimeter-recorder':
         specifier: workspace:*
         version: link:../../packages/recorder
       react:
@@ -162,13 +162,13 @@ importers:
 
   packages/react:
     dependencies:
-      '@ble-multimeter/protocol':
+      '@libreble/multimeter-protocol':
         specifier: workspace:*
         version: link:../protocol
-      '@ble-multimeter/recorder':
+      '@libreble/multimeter-recorder':
         specifier: workspace:*
         version: link:../recorder
-      '@ble-multimeter/web-bluetooth':
+      '@libreble/multimeter-web-bluetooth':
         specifier: workspace:*
         version: link:../web-bluetooth
     devDependencies:
@@ -208,7 +208,7 @@ importers:
 
   packages/recorder:
     dependencies:
-      '@ble-multimeter/protocol':
+      '@libreble/multimeter-protocol':
         specifier: workspace:*
         version: link:../protocol
     devDependencies:
@@ -227,13 +227,13 @@ importers:
 
   packages/vue:
     dependencies:
-      '@ble-multimeter/protocol':
+      '@libreble/multimeter-protocol':
         specifier: workspace:*
         version: link:../protocol
-      '@ble-multimeter/recorder':
+      '@libreble/multimeter-recorder':
         specifier: workspace:*
         version: link:../recorder
-      '@ble-multimeter/web-bluetooth':
+      '@libreble/multimeter-web-bluetooth':
         specifier: workspace:*
         version: link:../web-bluetooth
     devDependencies:
@@ -261,7 +261,7 @@ importers:
 
   packages/web-bluetooth:
     dependencies:
-      '@ble-multimeter/protocol':
+      '@libreble/multimeter-protocol':
         specifier: workspace:*
         version: link:../protocol
     devDependencies:

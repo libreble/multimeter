@@ -1,15 +1,19 @@
 // React binding for the multi-channel RecorderSession engine (Phase 7). Given the current set of
 // channels (meter + derived) with their latest readings, it registers them with the engine and
 // feeds each channel's newest reading in. The engine owns all buffer/stats/segmenting/persistence
-// (@ble-multimeter/recorder); this adapter just mirrors its snapshot and wires the channel feed.
+// (@libreble/multimeter-recorder); this adapter just mirrors its snapshot and wires the channel feed.
 //
 // Replaces the old single-channel useRecorder(reading) — single meter is just one channel.
 
 import { useEffect, useRef, useSyncExternalStore } from 'react';
-import type { Reading } from '@ble-multimeter/protocol';
-import { RecorderSession, type RecorderSnapshot, type ChannelSpec } from '@ble-multimeter/recorder';
+import type { Reading } from '@libreble/multimeter-protocol';
+import {
+  RecorderSession,
+  type RecorderSnapshot,
+  type ChannelSpec,
+} from '@libreble/multimeter-recorder';
 
-export type { RecState, SegmentInfo, ChannelView } from '@ble-multimeter/recorder';
+export type { RecState, SegmentInfo, ChannelView } from '@libreble/multimeter-recorder';
 
 // The minimal per-channel shape the recorder needs: who the channel is + its latest reading. The
 // MetersSession Channel type structurally satisfies this (meter and derived channels both carry

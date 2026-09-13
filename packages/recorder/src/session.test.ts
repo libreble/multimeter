@@ -4,7 +4,7 @@ import 'fake-indexeddb/auto';
 import { describe, it, expect } from 'vitest';
 import { RecorderSession, type ChannelSpec } from './session';
 import { readSamples, readAllSamples, getSession } from './storage';
-import type { Reading } from '@ble-multimeter/protocol';
+import type { Reading } from '@libreble/multimeter-protocol';
 
 const noFlags = {
   max: false,

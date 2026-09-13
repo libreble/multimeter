@@ -1,5 +1,5 @@
 {
-  "name": "@ble-multimeter/vue",
+  "name": "@libreble/multimeter-vue",
   "version": "0.0.1",
   "description": "Vue composables for BLE multimeters: useMeter/useRecorder/useSessions/usePinSession over the multimeter engines.",
   "author": "mannes <info@mbtech.nl>",
@@ -64,9 +64,9 @@
     "vue": ">=3.4"
   },
   "dependencies": {
-    "@ble-multimeter/protocol": "workspace:*",
-    "@ble-multimeter/recorder": "workspace:*",
-    "@ble-multimeter/web-bluetooth": "workspace:*"
+    "@libreble/multimeter-protocol": "workspace:*",
+    "@libreble/multimeter-recorder": "workspace:*",
+    "@libreble/multimeter-web-bluetooth": "workspace:*"
   },
   "devDependencies": {
     "@types/web-bluetooth": "^0.0.21",

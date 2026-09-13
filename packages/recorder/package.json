@@ -1,5 +1,5 @@
 {
-  "name": "@ble-multimeter/recorder",
+  "name": "@libreble/multimeter-recorder",
   "version": "0.0.1",
   "description": "Bluetooth-independent recording engine + IndexedDB session store for BLE multimeters.",
   "author": "mannes <info@mbtech.nl>",
@@ -62,7 +62,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@ble-multimeter/protocol": "workspace:*"
+    "@libreble/multimeter-protocol": "workspace:*"
   },
   "devDependencies": {
     "fake-indexeddb": "^6.2.5",

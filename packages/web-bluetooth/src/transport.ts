@@ -8,7 +8,7 @@
 // exposes. For the UT60BT
 // the matched profile is uni-t (ISSC Transparent UART, docs/protocols/uni-t.md).
 
-import { drivers, allNamePrefixes, type DriverGattProfile } from '@ble-multimeter/protocol';
+import { drivers, allNamePrefixes, type DriverGattProfile } from '@libreble/multimeter-protocol';
 
 const DEVICE_INFO_SERVICE = 0x180a; // model/serial/firmware strings — nice-to-have
 

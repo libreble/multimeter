@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import type { MeterSnapshot } from '@ble-multimeter/web-bluetooth';
+import type { MeterSnapshot } from '@libreble/multimeter-web-bluetooth';
 
 declare global {
   interface Window {

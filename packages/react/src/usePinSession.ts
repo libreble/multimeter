@@ -1,9 +1,9 @@
 // React binding for the PinRecorder engine (per-item pin capture). Thin adapter over
-// @ble-multimeter/recorder.
+// @libreble/multimeter-recorder.
 
 import { useEffect, useRef, useSyncExternalStore } from 'react';
-import type { Reading } from '@ble-multimeter/protocol';
-import { PinRecorder } from '@ble-multimeter/recorder';
+import type { Reading } from '@libreble/multimeter-protocol';
+import { PinRecorder } from '@libreble/multimeter-recorder';
 
 export interface PinSession {
   active: boolean;

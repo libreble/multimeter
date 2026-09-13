@@ -4,8 +4,8 @@
 // at least two meter channels to do anything.
 
 import { useState } from 'react';
-import type { Meters } from '@ble-multimeter/react';
-import { deriveUnit, OP_SYMBOL, type DerivedOp } from '@ble-multimeter/protocol';
+import type { Meters } from '@libreble/multimeter-react';
+import { deriveUnit, OP_SYMBOL, type DerivedOp } from '@libreble/multimeter-protocol';
 
 const OPS: DerivedOp[] = ['mul', 'div', 'add', 'sub'];
 
