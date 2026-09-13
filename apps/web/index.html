@@ -13,7 +13,7 @@
     <title>Multimeter — Bluetooth DMM logger in your browser (UNI-T, OWON, Aneng &amp; more)</title>
     <meta
       name="description"
-      content="Turn a Bluetooth multimeter into a live full-screen readout with charting, statistics, recording, and CSV/PNG export. Runs entirely in your browser — no install, no account. Supports UNI-T, OWON, Aneng, BSIDE/ZOYI, Voltcraft and AICARE meters."
+      content="Live readout, charts, recording and CSV export for UNI-T, OWON, Aneng, BSIDE, Voltcraft and AICARE Bluetooth multimeters. In Chrome over Web Bluetooth — no account, no cloud."
     />
     <meta name="application-name" content="Multimeter" />
     <meta name="apple-mobile-web-app-title" content="Multimeter" />
@@ -26,21 +26,42 @@
     <meta property="og:title" content="Multimeter — Bluetooth DMM logger in your browser" />
     <meta
       property="og:description"
-      content="Live readout, charting, recording, and CSV/PNG export for Bluetooth multimeters (UNI-T, OWON, Aneng, Voltcraft &amp; more). No install, runs from a URL."
+      content="Live readout, charts, recording and CSV export for UNI-T, OWON, Aneng, BSIDE, Voltcraft and AICARE Bluetooth multimeters. In Chrome over Web Bluetooth — no account, no cloud."
     />
     <meta property="og:url" content="https://libreble.github.io/multimeter/" />
-    <meta property="og:image" content="https://libreble.github.io/multimeter/pwa-512x512.png" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
+    <meta property="og:image" content="https://libreble.github.io/og/multimeter.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Multimeter — Bluetooth DMM logger in your browser" />
     <meta
       name="twitter:description"
-      content="Live readout, charting, recording, and CSV/PNG export for Bluetooth multimeters (UNI-T, OWON, Aneng &amp; more)."
+      content="Live readout, charts, recording and CSV export for UNI-T, OWON, Aneng, BSIDE, Voltcraft and AICARE Bluetooth multimeters. In Chrome over Web Bluetooth — no account, no cloud."
     />
-    <meta name="twitter:image" content="https://libreble.github.io/multimeter/pwa-512x512.png" />
+    <meta name="twitter:image" content="https://libreble.github.io/og/multimeter.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Multimeter",
+        "url": "https://libreble.github.io/multimeter/",
+        "description": "Live readout, charts, recording and CSV export for UNI-T, OWON, Aneng, BSIDE, Voltcraft and AICARE Bluetooth multimeters. In Chrome over Web Bluetooth — no account, no cloud.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Chrome on Android, Windows, macOS, Linux, ChromeOS",
+        "browserRequirements": "Requires a Chromium browser with Web Bluetooth (Chrome or Edge)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "isAccessibleForFree": true,
+        "license": "https://opensource.org/licenses/MIT",
+        "publisher": {
+          "@type": "Organization",
+          "name": "libreble",
+          "url": "https://libreble.github.io/"
+        },
+        "image": "https://libreble.github.io/og/multimeter.png"
+      }
+    </script>
     <!-- Resolve the theme before first paint so there's no light/dark flash. Saved choice
          wins; otherwise follow the OS. App's useTheme reads this class back as its initial
          state, so React stays in sync. -->
