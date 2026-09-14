@@ -156,3 +156,10 @@ IndexedDB · pnpm workspace.
 ## License
 
 [MIT](LICENSE)
+
+## Support
+
+The app is free and stays that way. If you'd like to support the work anyway: a coffee on
+[Ko-fi](https://ko-fi.com/mannes), or — honestly more useful — hardware. A device on the desk is
+how it gets an app; if you have one you'd like liberated, say so in a
+[device request](https://github.com/libreble/libreble.github.io/issues/new?template=device-request.yml).
