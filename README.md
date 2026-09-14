@@ -13,7 +13,7 @@ no install, no account, no data leaves your machine — and installs as an offli
 Android or Chrome/Edge on desktop (Web Bluetooth). No account, no cloud.
 [Try the demo](https://libreble.github.io/multimeter/?demo) (no meter needed).
 
-Part of [libreble](https://libreble.github.io) — your devices, without their vendors.
+Part of [libreble](https://libreble.github.io) — your devices, set free.
 
 <p align="center">
   <img src="assets/live-dark.png" alt="Live readout with chart and statistics" width="100%">
