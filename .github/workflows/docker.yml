@@ -1,13 +1,12 @@
 name: Container image
 
 # Publishes ghcr.io/libreble/<repo> (linux/amd64 + linux/arm64) with the built-in
-# GITHUB_TOKEN — no registry account or secrets. Pull requests build and smoke-test only.
+# GITHUB_TOKEN — no registry account or secrets. Releases only: a v* tag pushes
+# <version>, <major>.<minor> and latest. Pull requests build and smoke-test only.
 on:
   push:
-    branches: [main]
     tags: ['v*']
   pull_request:
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -30,8 +29,6 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=sha
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
 

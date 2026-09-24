@@ -5,9 +5,11 @@ name: Deploy to GitHub Pages
 # deployment → Source). Served as a project site at libreble.github.io/multimeter/, so the
 # repo must be named `multimeter` (Vite `base` is /multimeter/ to match).
 
+# Releases only: push a v* tag to publish. Merging to main doesn't deploy.
+# (workflow_dispatch on main redeploys main by hand, e.g. after a Pages outage.)
 on:
   push:
-    branches: [main]
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
