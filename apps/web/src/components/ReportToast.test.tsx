@@ -43,7 +43,7 @@ describe('ReportToast', () => {
 
   it('offers a connection-problem report after the chooser is dismissed, until dismissed', () => {
     const { container } = render(<ReportToast meters={meters([channel({ cancelled: true })])} />);
-    const link = screen.getByRole('link', { name: /tell us which one/i });
+    const link = screen.getByRole('link', { name: /let us know/i });
     expect(link.getAttribute('href')).toContain('template=connection-problem.yml');
     fireEvent.click(screen.getByRole('button', { name: /dismiss/i }));
     expect(container.firstChild).toBeNull();
@@ -59,8 +59,8 @@ describe('ReportToast', () => {
     });
     const live = [channel({ state: 'live', driverId: 'ut181a', deviceName: 'UT181A' })];
     const { container, unmount } = render(<ReportToast meters={meters(live, { describe })} />);
-    expect(screen.getByText(/not yet confirmed on real hardware/i)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: /report it/i }));
+    expect(screen.getByText(/how is your meter working for you/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /let us know/i }));
     await waitFor(() => expect(open).toHaveBeenCalled());
     expect(open.mock.calls[0]![0]).toContain('template=device-report.yml');
     await waitFor(() => expect(container.firstChild).toBeNull());

@@ -32,8 +32,8 @@ describe('device report URLs', () => {
   });
 
   it('maps drivers to their verification tier', () => {
-    expect(verification('uni-t')?.tier).toBe('live-tested');
-    expect(verification('ut181a')?.text).toBe('not yet confirmed on real hardware');
+    expect(verification('uni-t')).toBe('live-tested');
+    expect(verification('ut181a')).toBe('ported-unverified');
     expect(verification(null)).toBeNull();
   });
 });

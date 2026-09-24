@@ -1,12 +1,12 @@
 // A dismissible, non-blocking toast inviting a device report (see lib/report.ts). Two cases:
-//   * a real meter is live on a driver not yet confirmed on hardware → "does it work?". Dismissing
+//   * a real meter is live on a driver not yet confirmed on hardware → "how is it working?". Dismissing
 //     or reporting is remembered per driver, so it asks once.
-//   * the chooser was dismissed or connecting failed → "not in the list, or won't connect?".
+//   * the chooser was dismissed or connecting failed → "trouble finding or connecting?".
 //     Dismissing hides it until the next cancel/failure.
 // Both open a pre-filled GitHub issue form in a new tab; the user reviews and submits it there.
 
 import { useEffect, useState } from 'react';
-import type { MeterChannel, Meters } from '@libreble/multimeter-react';
+import type { Meters } from '@libreble/multimeter-react';
 import { connectionProblemUrl, deviceReportUrl, verification } from '../lib/report';
 
 const DONE_KEY = (driverId: string) => `multimeter.reportDone.${driverId}`;
@@ -36,7 +36,7 @@ export function ReportToast({ meters }: { meters: Meters }) {
     c =>
       c.state === 'live' &&
       c.driverId !== null &&
-      verification(c.driverId)?.tier !== 'live-tested' &&
+      verification(c.driverId) !== 'live-tested' &&
       !done.has(c.driverId) &&
       !isDone(c.driverId),
   );
@@ -63,12 +63,9 @@ export function ReportToast({ meters }: { meters: Meters }) {
     };
     return (
       <Toast onDismiss={finish}>
-        <p>
-          <strong className="font-semibold text-zinc-100">{name(unconfirmed)}</strong> is{' '}
-          {verification(driverId)?.text}. Does it read right?
-        </p>
+        <p>How is your meter working for you?</p>
         <button type="button" onClick={() => void report()} className={ACTION}>
-          Report it
+          Let us know
         </button>
       </Toast>
     );
@@ -77,7 +74,7 @@ export function ReportToast({ meters }: { meters: Meters }) {
   if (problem && !problemDismissed) {
     return (
       <Toast onDismiss={() => setProblemDismissed(true)}>
-        <p>Meter not in the list, or won't connect?</p>
+        <p>Trouble finding or connecting your meter?</p>
         <a
           href={connectionProblemUrl(problem.error)}
           target="_blank"
@@ -85,7 +82,7 @@ export function ReportToast({ meters }: { meters: Meters }) {
           onClick={() => setProblemDismissed(true)}
           className={ACTION}
         >
-          Tell us which one
+          Let us know
         </a>
       </Toast>
     );
@@ -93,8 +90,6 @@ export function ReportToast({ meters }: { meters: Meters }) {
 
   return null;
 }
-
-const name = (c: MeterChannel) => c.deviceName ?? 'This meter';
 
 const ACTION =
   'mt-2 inline-block rounded-md bg-emerald-500 px-3 py-1 text-sm font-semibold text-emerald-950 hover:bg-emerald-400';

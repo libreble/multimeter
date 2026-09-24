@@ -8,12 +8,6 @@ import type { GattDescription } from '@libreble/multimeter-react';
 
 const ISSUES = 'https://github.com/libreble/multimeter/issues/new';
 
-const VERIFICATION_TEXT = {
-  'live-tested': 'confirmed on real hardware',
-  'app-verified': 'checked against the vendor app, not yet on a real meter',
-  'ported-unverified': 'not yet confirmed on real hardware',
-} as const;
-
 function browser(): string {
   return typeof navigator === 'undefined' ? 'unknown' : navigator.userAgent;
 }
@@ -23,10 +17,9 @@ function issueUrl(template: string, title: string, fields: Record<string, string
   return `${ISSUES}?${q}`;
 }
 
-/** A driver's verification tier plus a plain-language phrase for the report prompt. */
+/** A driver's verification tier, or null for no/unknown driver. */
 export function verification(driverId: string | null) {
-  const d = driverId ? driverById(driverId) : undefined;
-  return d ? { tier: d.verification, text: VERIFICATION_TEXT[d.verification] } : null;
+  return (driverId && driverById(driverId)?.verification) || null;
 }
 
 export function connectedSummary(driverId: string | null, g: GattDescription | null): string {
