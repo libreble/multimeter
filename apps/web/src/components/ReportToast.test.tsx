@@ -67,9 +67,46 @@ describe('ReportToast', () => {
     open.mockRestore();
     unmount();
 
-    // Remembered per driver: a later session doesn't ask again.
+    // Remembered per install: a later session doesn't ask again — not even for another driver.
     const again = render(<ReportToast meters={meters(live, { describe })} />);
     expect(again.container.firstChild).toBeNull();
+    again.unmount();
+    const other = render(
+      <ReportToast meters={meters([channel({ state: 'live', driverId: 'owon-plus' })])} />,
+    );
+    expect(other.container.firstChild).toBeNull();
+  });
+
+  it('asks once per install, even across drivers in one session', () => {
+    const { container, rerender } = render(
+      <ReportToast meters={meters([channel({ state: 'live', driverId: 'ut181a' })])} />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: /dismiss/i }));
+    expect(container.firstChild).toBeNull();
+    rerender(<ReportToast meters={meters([channel({ state: 'live', driverId: 'owon-plus' })])} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it('honours a per-driver key left by an older build', () => {
+    localStorage.setItem('multimeter.reportDone.ut181a', '1');
+    const { container } = render(
+      <ReportToast meters={meters([channel({ state: 'live', driverId: 'owon-plus' })])} />,
+    );
+    expect(container.firstChild).toBeNull();
+  });
+
+  it('offers a problem report for an error surfaced while connected, re-armed by a new error', () => {
+    localStorage.setItem('multimeter.reportDone', '1');
+    const live = (error: string | null) =>
+      meters([channel({ state: 'live', driverId: 'uni-t', error })]);
+    const { container, rerender } = render(<ReportToast meters={live('write failed')} />);
+    expect(screen.getByText(/trouble with your meter/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /dismiss/i }));
+    expect(container.firstChild).toBeNull();
+    rerender(<ReportToast meters={live('write failed')} />);
+    expect(container.firstChild).toBeNull();
+    rerender(<ReportToast meters={live('GATT operation failed')} />);
+    expect(screen.getByText(/trouble with your meter/i)).toBeInTheDocument();
   });
 
   it('never asks about demo meters', () => {

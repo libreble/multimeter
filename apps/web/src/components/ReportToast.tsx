@@ -1,57 +1,58 @@
 // A dismissible, non-blocking toast inviting a device report (see lib/report.ts). Two cases:
 //   * a real meter is live on a driver not yet confirmed on hardware → "how is it working?". Dismissing
-//     or reporting is remembered per driver, so it asks once.
-//   * the chooser was dismissed or connecting failed → "trouble finding or connecting?".
-//     Dismissing hides it until the next cancel/failure.
+//     or reporting is remembered once per install, whatever the driver — a working meter shouldn't nag.
+//   * the chooser was dismissed or any error (connect, reconnect, or one surfaced while live) →
+//     "trouble with your meter?". Dismissing hides it until the next cancel/error.
 // Both open a pre-filled GitHub issue form in a new tab; the user reviews and submits it there.
 
 import { useEffect, useState } from 'react';
 import type { Meters } from '@libreble/multimeter-react';
 import { connectionProblemUrl, deviceReportUrl, verification } from '../lib/report';
 
-const DONE_KEY = (driverId: string) => `multimeter.reportDone.${driverId}`;
+const DONE_KEY = 'multimeter.reportDone';
 
-function isDone(driverId: string): boolean {
+function isDone(): boolean {
   try {
-    return localStorage.getItem(DONE_KEY(driverId)) !== null;
+    // Older builds stored one key per driver (multimeter.reportDone.<driverId>) — honour those.
+    return Object.keys(localStorage).some(k => k === DONE_KEY || k.startsWith(`${DONE_KEY}.`));
   } catch {
     return false;
   }
 }
 
-function markDone(driverId: string): void {
+function markDone(): void {
   try {
-    localStorage.setItem(DONE_KEY(driverId), '1');
+    localStorage.setItem(DONE_KEY, '1');
   } catch {
     /* storage unavailable — it may ask again next time */
   }
 }
 
 export function ReportToast({ meters }: { meters: Meters }) {
-  const [done, setDone] = useState<Set<string>>(() => new Set());
+  const [doneNow, setDoneNow] = useState(false);
   const [problemDismissed, setProblemDismissed] = useState(false);
 
   const real = meters.meters.filter(c => !meters.meterSession(c.id)?.isDemo);
-  const unconfirmed = real.find(
-    c =>
-      c.state === 'live' &&
-      c.driverId !== null &&
-      verification(c.driverId) !== 'live-tested' &&
-      !done.has(c.driverId) &&
-      !isDone(c.driverId),
-  );
-  const problem = real.find(c => c.cancelled || c.state === 'error');
+  const unconfirmed =
+    !doneNow && !isDone()
+      ? real.find(
+          c =>
+            c.state === 'live' && c.driverId !== null && verification(c.driverId) !== 'live-tested',
+        )
+      : undefined;
+  const problem = real.find(c => c.cancelled || c.state === 'error' || c.error !== null);
+  // Which problem is showing: re-arm once it clears, or when a different error replaces it.
+  const problemKey = problem ? `${problem.id}\n${problem.error ?? 'cancelled'}` : null;
 
-  // A new cancel/failure after a successful attempt shows the toast again.
   useEffect(() => {
-    if (!problem) setProblemDismissed(false);
-  }, [problem]);
+    setProblemDismissed(false);
+  }, [problemKey]);
 
   if (unconfirmed) {
     const driverId = unconfirmed.driverId!;
     const finish = () => {
-      markDone(driverId);
-      setDone(d => new Set(d).add(driverId));
+      markDone();
+      setDoneNow(true);
     };
     // Read the GATT description only on click: a few best-effort Device Information reads that
     // shouldn't sit in the connect path. Transient user activation outlives them, so the new tab
@@ -74,7 +75,7 @@ export function ReportToast({ meters }: { meters: Meters }) {
   if (problem && !problemDismissed) {
     return (
       <Toast onDismiss={() => setProblemDismissed(true)}>
-        <p>Trouble finding or connecting your meter?</p>
+        <p>Trouble with your meter?</p>
         <a
           href={connectionProblemUrl(problem.error)}
           target="_blank"
