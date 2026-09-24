@@ -1,0 +1,36 @@
+# Static server for the built PWA. BASE_PATH is substituted at container start
+# (nginx image envsubst; only defined env vars are replaced, so $uri stays as is).
+server {
+    listen 8080;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+    server_tokens off;
+
+    location = /healthz {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+
+    # Hashed build output: cache forever.
+    location ${BASE_PATH}assets/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        add_header X-Content-Type-Options nosniff;
+        try_files $uri =404;
+    }
+
+    location ~ \.webmanifest$ {
+        default_type application/manifest+json;
+        add_header Cache-Control "no-cache";
+        add_header X-Content-Type-Options nosniff;
+    }
+
+    # index.html, sw.js and everything else: always revalidate so updates land.
+    # Unknown paths get the app shell (client-side routes, deep links).
+    location ${BASE_PATH} {
+        add_header Cache-Control "no-cache";
+        add_header X-Content-Type-Options nosniff;
+        try_files $uri $uri/ ${BASE_PATH}index.html;
+    }
+}
