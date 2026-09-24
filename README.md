@@ -105,6 +105,50 @@ pnpm lint        # eslint across the workspace
 > screenshots above. Demo mode needs no Bluetooth, so it runs in any browser (Firefox and
 > Safari included).
 
+## Self-host
+
+The hosted app above is the easiest way. If you'd rather run your own copy, it's a static site —
+nothing to configure, no backend, no database.
+
+**Docker** — a prebuilt image (linux/amd64 + arm64) is published to the GitHub Container Registry:
+
+```bash
+docker run -d --name multimeter -p 8080:8080 --restart unless-stopped ghcr.io/libreble/multimeter
+# → http://localhost:8080/
+```
+
+```yaml
+# compose.yaml
+services:
+  multimeter:
+    image: ghcr.io/libreble/multimeter:latest
+    ports: ["8080:8080"]
+    restart: unless-stopped
+```
+
+The image serves the app at `/`. To serve it under a subpath behind your own proxy, build it
+yourself: `docker build --build-arg BASE_PATH=/multimeter/ -t multimeter .`
+
+**Build and host it yourself** — any static web server works:
+
+```bash
+pnpm install --frozen-lockfile
+BASE_PATH=/ pnpm --filter web build      # → apps/web/dist/
+# upload apps/web/dist/ to nginx, Caddy, Netlify, Cloudflare Pages, a bucket, …
+```
+
+Set `BASE_PATH` to the path you serve from (it defaults to `/multimeter/`, the GitHub Pages path).
+Serve `index.html` and `sw.js` with `Cache-Control: no-cache` so updates reach installed copies.
+[`docker/nginx.conf.template`](docker/nginx.conf.template) is a working nginx example.
+
+> **HTTPS is required.** Web Bluetooth only works in a secure context. `http://localhost` counts,
+> so the app works on the machine running it — but `http://192.168.x.x:8080` from your phone
+> will load and then refuse to connect. For phones, put it behind TLS: a reverse proxy with a
+> real certificate (Caddy does this automatically for a domain), or `tailscale serve`.
+
+Self-hosted copies keep their `<link rel="canonical">` pointing at libreble.github.io, so
+search engines don't treat them as duplicates.
+
 ## Keyboard shortcuts
 
 | Key     | Action                   | Key | Action                   |
