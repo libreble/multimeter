@@ -1,9 +1,11 @@
 /// <reference types="vitest/config" />
+/// <reference types="node" />
 import { defineConfig } from 'vitest/config';
 import { loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { execSync } from 'node:child_process';
 
 // Web Bluetooth needs a secure context: localhost (dev) is fine; for phone testing
 // over the LAN you'd need HTTPS. `host: true` exposes the dev server on the network.
@@ -12,6 +14,21 @@ import { VitePWA } from 'vite-plugin-pwa';
 // `base` is the repo subpath and the service-worker scope + manifest start_url/scope all
 // mirror it. (Switch to '/' + a CNAME only if it ever moves to a dedicated custom domain.)
 // Self-hosters override it: `BASE_PATH=/ pnpm build` (the Docker image does this).
+// Shown in the footer. Tag builds in CI use the tag (v1.2.0); elsewhere `git describe`
+// (v1.2.0-3-gabc1234, or a bare sha on a shallow clone); `APP_VERSION` overrides; no git → "dev".
+function appVersion(): string {
+  if (process.env.APP_VERSION) return process.env.APP_VERSION;
+  if (process.env.GITHUB_REF_TYPE === 'tag' && process.env.GITHUB_REF_NAME)
+    return process.env.GITHUB_REF_NAME;
+  try {
+    return execSync('git describe --tags --always', { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .trim();
+  } catch {
+    return 'dev';
+  }
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   const base = `/${(env.BASE_PATH || '/multimeter/').replace(/^\/+|\/+$/g, '')}/`.replace(
@@ -20,6 +37,7 @@ export default defineConfig(({ mode }) => {
   );
   return {
     base,
+    define: { __APP_VERSION__: JSON.stringify(appVersion()) },
     plugins: [
       react(),
       tailwindcss(),

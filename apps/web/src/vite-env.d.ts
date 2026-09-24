@@ -13,3 +13,8 @@ declare global {
     };
   }
 }
+
+declare global {
+  /** Build version for the footer — see appVersion() in vite.config.ts. */
+  const __APP_VERSION__: string;
+}

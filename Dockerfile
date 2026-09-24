@@ -10,7 +10,9 @@ RUN npm install -g corepack && corepack enable
 COPY . .
 RUN pnpm install --frozen-lockfile
 ARG BASE_PATH=/
-RUN BASE_PATH="$BASE_PATH" pnpm --filter web build
+# .git isn't in the build context, so pass the version in: --build-arg APP_VERSION=v1.2.0
+ARG APP_VERSION=dev
+RUN BASE_PATH="$BASE_PATH" APP_VERSION="$APP_VERSION" pnpm --filter web build
 
 FROM nginxinc/nginx-unprivileged:1.29-alpine AS serve
 ARG BASE_PATH=/
