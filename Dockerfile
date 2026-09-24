@@ -4,9 +4,9 @@
 #   docker build -t multimeter .                                   # served at /
 #   docker build --build-arg BASE_PATH=/multimeter/ -t multimeter .   # served at /multimeter/
 
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
-RUN corepack enable
+RUN npm install -g corepack && corepack enable
 COPY . .
 RUN pnpm install --frozen-lockfile
 ARG BASE_PATH=/

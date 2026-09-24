@@ -52,6 +52,9 @@ export default defineConfig(({ mode }) => {
     server: { host: true },
     test: {
       environment: 'jsdom',
+      // Node 25+ ships its own global localStorage (unusable without --localstorage-file), which
+      // shadows jsdom's. Turn it off so tests get the jsdom one.
+      execArgv: ['--no-experimental-webstorage'],
       setupFiles: ['./src/test/setup.ts'],
       coverage: {
         provider: 'v8',
