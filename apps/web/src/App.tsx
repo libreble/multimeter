@@ -26,6 +26,7 @@ import { ThemeToggle } from './components/ThemeToggle';
 import { ChartColorPicker } from './components/ChartColorPicker';
 import { ShortcutsHelp } from './components/ShortcutsHelp';
 import { UnsupportedBrowser } from './components/UnsupportedBrowser';
+import { ReportToast } from './components/ReportToast';
 import { exportCsv, exportPng } from './lib/exporters';
 
 // Code-split the uPlot-heavy chart + the whole Recordings view so the initial bundle stays lean.
@@ -375,6 +376,8 @@ export default function App() {
       <div aria-live="polite" role="status" className="sr-only">
         {announcement}
       </div>
+
+      <ReportToast meters={meters} />
 
       <ShortcutsHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
     </div>

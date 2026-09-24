@@ -1,0 +1,44 @@
+name: Connection problem
+description: Your meter isn't in the list, or it won't connect.
+title: 'Connection problem: '
+labels: ['connection problem']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Sorry it didn't work. Tell us what you have — a meter that doesn't show up in the list
+        usually just isn't supported *yet*, and knowing it exists is the first step.
+  - type: input
+    id: model
+    attributes:
+      label: Meter model
+      description: Brand and model as printed on the meter.
+      placeholder: UNI-T UT60BT
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What happened?
+      options:
+        - My meter isn't in the list
+        - It's in the list, but won't connect
+        - It connects, then drops
+    validations:
+      required: true
+  - type: input
+    id: vendor_app
+    attributes:
+      label: Vendor app
+      description: If the meter works with a phone app from its maker, which one?
+  - type: textarea
+    id: details
+    attributes:
+      label: Anything else?
+      description: Is Bluetooth switched on on the meter? Did it show up under a different name?
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Filled in by the app. Review it before submitting.
+      render: text

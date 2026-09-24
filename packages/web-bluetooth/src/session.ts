@@ -19,7 +19,7 @@ import {
   type MeterControl,
   type Reading,
 } from '@libreble/multimeter-protocol';
-import { Transport } from './transport';
+import { Transport, type GattDescription } from './transport';
 import { isDemoMode, demoReadingFor, DEFAULT_DEMO_PROFILE, type DemoProfile } from './demo';
 
 export type MeterState =
@@ -38,6 +38,7 @@ export interface MeterSnapshot {
   error: string | null;
   controls: MeterControl[]; // front-panel controls the active driver exposes (empty when idle)
   driverId: string | null; // id of the matched/sniffed driver (null until one is committed)
+  cancelled: boolean; // the last connect ended with the chooser dismissed (no device picked)
 }
 
 const errMsg = (e: unknown) => (e instanceof Error ? `${e.name}: ${e.message}` : String(e));
@@ -96,6 +97,7 @@ export class MeterSession {
       error: null,
       controls: [],
       driverId: null,
+      cancelled: false,
     };
   }
 
@@ -190,7 +192,7 @@ export class MeterSession {
       this.set({ state: 'unsupported' });
       return;
     }
-    this.set({ error: null, state: 'connecting' });
+    this.set({ error: null, cancelled: false, state: 'connecting' });
     const t = new Transport();
     t.onChunk = this.handleChunk;
     t.onDisconnect = this.handleDisconnect;
@@ -222,11 +224,16 @@ export class MeterSession {
     } catch (e) {
       // User dismissing the chooser throws NotFoundError — a cancel, not a failure.
       if (e instanceof DOMException && e.name === 'NotFoundError') {
-        this.set({ state: 'idle' });
+        this.set({ state: 'idle', cancelled: !t.chosen });
         return;
       }
       this.set({ error: errMsg(e), state: 'error' });
     }
+  }
+
+  /** Identifiers + GATT layout of the connected meter for a device report (null in demo). */
+  async describe(): Promise<GattDescription | null> {
+    return this.transport ? this.transport.describe() : null;
   }
 
   private async realReconnect(): Promise<void> {

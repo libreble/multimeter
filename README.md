@@ -175,6 +175,13 @@ UNI-T, Aneng / BSIDE / ZOYI, Owon, Voltcraft, and AICARE. See the
 **[hardware support list](docs/HARDWARE.md)** for every model and its verification state, and
 **[docs/protocols/](docs/protocols/README.md)** for a per-driver protocol spec.
 
+Most drivers haven't met a real meter yet. When yours connects, the app asks whether it reads
+right and opens a pre-filled [device report](https://github.com/libreble/multimeter/issues/new?template=device-report.yml)
+— the meter's advertised name and Bluetooth layout, no readings. If your meter isn't in the list
+or won't connect, dismissing the chooser offers a
+[connection-problem report](https://github.com/libreble/multimeter/issues/new?template=connection-problem.yml).
+Nothing is sent from the app; you review and submit the issue on GitHub.
+
 ## Packages
 
 The app is a thin shell over framework-agnostic packages, so you can build your own

@@ -32,6 +32,30 @@ export interface TransportProfile {
   gatt: DriverGattProfile;
 }
 
+/**
+ * What a connected device exposes — identifiers and GATT layout, no measurement data. Feeds the
+ * in-app device report, so a user can tell us how an unconfirmed meter behaves.
+ */
+export interface GattDescription {
+  name: string | null;
+  service: string | null; // the matched driver service
+  characteristics: { uuid: string; properties: string[] }[];
+  deviceInfo: Record<string, string>; // Device Information Service strings, when the meter has one
+}
+
+// Device Information Service (0x180a) strings worth reporting.
+const DEVICE_INFO_STRINGS: Record<string, number> = {
+  manufacturer: 0x2a29,
+  model: 0x2a24,
+  hardware: 0x2a27,
+  firmware: 0x2a26,
+  software: 0x2a28,
+};
+
+const CHAR_FLAGS = ['notify', 'indicate', 'read', 'write', 'writeWithoutResponse'] as const;
+const charFlags = (c: BluetoothRemoteGATTCharacteristic): string[] =>
+  CHAR_FLAGS.filter(k => c.properties[k]);
+
 const registryProfiles = (): TransportProfile[] => drivers.map(d => ({ id: d.id, gatt: d.gatt }));
 
 export class Transport {
@@ -44,6 +68,7 @@ export class Transport {
   private writeChar: BluetoothRemoteGATTCharacteristic | undefined;
   private profile?: DriverGattProfile; // the matched driver's GATT profile (for reconnect)
   private matchedId?: string;
+  private chars: BluetoothRemoteGATTCharacteristic[] = [];
 
   static get supported(): boolean {
     return typeof navigator !== 'undefined' && !!navigator.bluetooth;
@@ -51,6 +76,11 @@ export class Transport {
 
   get deviceName(): string | undefined {
     return this.device?.name;
+  }
+
+  /** True once the user picked a device in the chooser (false if they dismissed it). */
+  get chosen(): boolean {
+    return !!this.device;
   }
 
   get connected(): boolean {
@@ -141,14 +171,9 @@ export class Transport {
     this.matchedId = chosen.id;
 
     const chars = await svc.getCharacteristics();
+    this.chars = chars;
     dbg(`matched id=${chosen.id} service=${chosen.gatt.service}; characteristics:`);
-    for (const c of chars) {
-      const p = c.properties;
-      const flags = (['notify', 'indicate', 'read', 'write', 'writeWithoutResponse'] as const)
-        .filter(k => p[k])
-        .join(',');
-      dbg(`  ${c.uuid}  [${flags}]`);
-    }
+    for (const c of chars) dbg(`  ${c.uuid}  [${charFlags(c).join(',')}]`);
     // Prefer the profile's UUIDs; fall back to characteristic properties so a firmware
     // reshuffle doesn't strand us.
     this.notifyChar =
@@ -164,6 +189,38 @@ export class Transport {
 
     await this.notifyChar.startNotifications();
     this.notifyChar.addEventListener('characteristicvaluechanged', this.handleValue);
+  }
+
+  /**
+   * Identifiers + GATT layout of the chosen device, for the device report. The Device Information
+   * reads are best-effort and on demand (only when the user opens a report), so they never sit in
+   * the connect path.
+   */
+  async describe(): Promise<GattDescription> {
+    const deviceInfo: Record<string, string> = {};
+    if (this.server?.connected) {
+      try {
+        const dis = await this.server.getPrimaryService(DEVICE_INFO_SERVICE);
+        // Sequential: Android rejects concurrent GATT operations.
+        for (const [key, uuid] of Object.entries(DEVICE_INFO_STRINGS)) {
+          try {
+            const v = await (await dis.getCharacteristic(uuid)).readValue();
+            const text = new TextDecoder().decode(v).replace(/\0+$/, '').trim();
+            if (text) deviceInfo[key] = text;
+          } catch {
+            /* this string isn't exposed */
+          }
+        }
+      } catch {
+        /* no Device Information Service */
+      }
+    }
+    return {
+      name: this.device?.name ?? null,
+      service: this.profile?.service ?? null,
+      characteristics: this.chars.map(c => ({ uuid: c.uuid, properties: charFlags(c) })),
+      deviceInfo,
+    };
   }
 
   private handleValue = (e: Event): void => {

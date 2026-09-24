@@ -12,6 +12,7 @@ export {
   type MeterChannel,
   type DerivedChannel,
   type DerivedConfig,
+  type GattDescription,
 } from './useMeters';
 export { useRecorder, type Recorder, type RecState, type SegmentInfo } from './useRecorder';
 export { useSessions, type Sessions, type OpenedSession, type OpenedChannel } from './useSessions';

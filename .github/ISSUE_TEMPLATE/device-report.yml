@@ -1,0 +1,46 @@
+name: Device report
+description: Tell us how your meter works with the app — this is how drivers get confirmed.
+title: 'Device report: '
+labels: ['device report']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! Many drivers are built from protocol notes and haven't met a real meter yet —
+        your report is how they get confirmed (or fixed).
+
+        If you opened this from the app, the **Connection** box below is already filled in with
+        your meter's advertised name and Bluetooth layout. Nothing else was sent. If we need a raw
+        capture to fix something, we'll ask in the thread.
+  - type: input
+    id: model
+    attributes:
+      label: Meter model
+      description: Brand and model as printed on the meter.
+      placeholder: UNI-T UT60BT
+    validations:
+      required: true
+  - type: dropdown
+    id: works
+    attributes:
+      label: Does it work?
+      options:
+        - Yes — readings match the meter's display
+        - Mostly — some modes or values are wrong
+        - It connects, but the readings are wrong
+        - It connects, but no readings appear
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What did you try?
+      description: >-
+        Which modes did you check (V, A, Ω, °C…)? Where they differ, what does the meter show and
+        what does the app show?
+  - type: textarea
+    id: connection
+    attributes:
+      label: Connection
+      description: Filled in by the app. Review it before submitting.
+      render: text
