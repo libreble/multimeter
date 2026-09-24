@@ -40,6 +40,8 @@ export interface MeterChannel {
   deviceName: string | null;
   error: string | null;
   controls: MeterControl[]; // front-panel controls the connected meter exposes (empty when idle)
+  driverId: string | null; // matched driver (null until identified)
+  cancelled: boolean; // last connect ended with the chooser dismissed
 }
 
 export interface DerivedChannel {
@@ -263,6 +265,8 @@ export class MetersSession {
         deviceName: s.deviceName,
         error: s.error,
         controls: s.controls,
+        driverId: s.driverId,
+        cancelled: s.cancelled,
       };
     });
     const derived: DerivedChannel[] = this.derivedList.map(d => ({

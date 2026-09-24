@@ -2,7 +2,7 @@
 // MeterSession engine. Depends on @libreble/multimeter-protocol; consumed by the React/Vue
 // bindings (and any custom UI). Web Bluetooth is Chromium-only and needs a secure context.
 
-export { Transport, type TransportProfile } from './transport';
+export { Transport, type TransportProfile, type GattDescription } from './transport';
 export { MeterSession, type MeterState, type MeterSnapshot } from './session';
 export {
   MetersSession,

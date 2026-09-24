@@ -307,6 +307,8 @@ describe('MeterSession — error handling', () => {
     s.connect();
     await vi.waitFor(() => expect(s.getSnapshot().state).toBe('idle'));
     expect(s.getSnapshot().error).toBeNull();
+    // Flagged so the UI can offer "meter not listed / won't connect?".
+    expect(s.getSnapshot().cancelled).toBe(true);
   });
 
   it('goes to error (not idle) on a non-NotFound connect failure', async () => {

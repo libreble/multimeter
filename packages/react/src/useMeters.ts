@@ -18,6 +18,7 @@ export type {
   MeterChannel,
   DerivedChannel,
   DerivedConfig,
+  GattDescription,
 } from '@libreble/multimeter-web-bluetooth';
 
 export interface Meters extends MetersSnapshot {

@@ -170,3 +170,27 @@ describe('disconnect / reconnect / events', () => {
     expect(device.gatt.connect).toHaveBeenCalledTimes(2);
   });
 });
+
+describe('describe', () => {
+  it('reports the chosen device name, matched service and characteristics', async () => {
+    const notify = new FakeChar(ISSC_NOTIFY, { notify: true });
+    const write = new FakeChar(ISSC_WRITE, { write: true, writeWithoutResponse: true });
+    const { device } = makeDevice([notify, write], { name: 'UT60BT_AB' });
+    installBluetooth(device);
+
+    const t = new Transport();
+    expect(t.chosen).toBe(false);
+    await t.requestAndConnect();
+    expect(t.chosen).toBe(true);
+
+    const d = await t.describe();
+    expect(d.name).toBe('UT60BT_AB');
+    expect(d.service).toBeTruthy();
+    expect(d.characteristics).toEqual([
+      { uuid: ISSC_NOTIFY, properties: ['notify'] },
+      { uuid: ISSC_WRITE, properties: ['write', 'writeWithoutResponse'] },
+    ]);
+    // The fake has no Device Information strings — best-effort, so just empty.
+    expect(d.deviceInfo).toEqual({});
+  });
+});
