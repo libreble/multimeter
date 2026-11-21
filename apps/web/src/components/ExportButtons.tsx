@@ -4,9 +4,9 @@
 // available once there's something on screen. The actual work lives in lib/exporters so
 // the keyboard shortcuts share it exactly.
 
-import type { RefObject } from 'react';
+import { useState, type RefObject } from 'react';
 import type { MultiChartHandle } from './MultiChart';
-import { exportCsv, exportPng } from '../lib/exporters';
+import { copyPng, exportCsv, exportPng } from '../lib/exporters';
 
 interface Props {
   chartRef: RefObject<MultiChartHandle | null>;
@@ -18,8 +18,22 @@ const btn =
   'rounded-md border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40';
 
 export function ExportButtons({ chartRef, csvTarget }: Props) {
+  const [copyMessage, setCopyMessage] = useState('');
+  const [copyFailed, setCopyFailed] = useState(false);
+
+  const onCopy = () => {
+    setCopyMessage('Copying窶ｦ');
+    setCopyFailed(false);
+    void copyPng(chartRef.current)
+      .then(() => setCopyMessage('PNG copied. Paste with Ctrl+V.'))
+      .catch((error: unknown) => {
+        setCopyFailed(true);
+        setCopyMessage(error instanceof Error ? error.message : 'PNG copy failed.');
+      });
+  };
+
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <button
         onClick={() => csvTarget && void exportCsv(csvTarget)}
         disabled={!csvTarget}
@@ -34,6 +48,21 @@ export function ExportButtons({ chartRef, csvTarget }: Props) {
       >
         Download PNG
       </button>
+      <button
+        type="button"
+        onClick={onCopy}
+        className={btn}
+        title="Copy chart PNG with axes and labels"
+      >
+        Copy PNG
+      </button>
+      <span
+        role="status"
+        aria-live="polite"
+        className={`text-xs ${copyFailed ? 'text-red-400' : 'text-zinc-400'}`}
+      >
+        {copyMessage}
+      </span>
     </div>
   );
 }

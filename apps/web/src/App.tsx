@@ -321,7 +321,10 @@ export default function App() {
                           stats={c.stats}
                           unit={c.segment?.unit ?? ''}
                           durationMs={c.statsDurationMs}
-                          onReset={recorder.resetStats}
+                          onReset={() => {
+                            chartRef.current?.resetPlot();
+                            recorder.resetStats();
+                          }}
                         />
                       </div>
                     ))}

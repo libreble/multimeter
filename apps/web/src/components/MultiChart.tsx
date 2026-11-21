@@ -15,6 +15,7 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState }
 import uPlot from 'uplot';
 import type { AlignedData, Axis, Options, Scale, Series } from 'uplot';
 import 'uplot/dist/uPlot.min.css';
+import { chartToPng } from '../lib/chartPng';
 import { decimate } from '@libreble/multimeter-protocol';
 import type { Sample } from '@libreble/multimeter-protocol';
 
@@ -38,6 +39,7 @@ export interface ChartSeries {
 
 export interface MultiChartHandle {
   toPng: () => Promise<Blob | null>;
+  resetPlot: () => void;
 }
 
 interface Props {
@@ -97,6 +99,15 @@ function buildData(series: ChartSeries[]): AlignedData {
   return [xs.map(t => t / 1000), ...rows] as AlignedData;
 }
 
+// The reset only changes displayed data. Original recorder samples and CSV remain intact.
+function visibleSeries(series: ChartSeries[], resetAt: number | null): ChartSeries[] {
+  if (resetAt === null) return series;
+  return series.map(s => ({
+    ...s,
+    samples: s.samples.filter(sample => sample.t > resetAt),
+  }));
+}
+
 // uPlot axis sides: 0 top, 1 right, 2 bottom, 3 left. y-axes alternate left/right.
 type Side = 1 | 3;
 
@@ -120,6 +131,7 @@ export const MultiChart = forwardRef<MultiChartHandle, Props>(function MultiChar
   const hostRef = useRef<HTMLDivElement>(null);
   const plotRef = useRef<uPlot | null>(null);
   const [windowMs, setWindowMs] = useState<number | null>(null);
+  const resetAtRef = useRef<number | null>(null);
 
   const seriesRef = useRef(series);
   seriesRef.current = series;
@@ -185,9 +197,9 @@ export const MultiChart = forwardRef<MultiChartHandle, Props>(function MultiChar
       series: uSeries,
     };
 
-    const u = new uPlot(opts, buildData(cur), host);
+    const u = new uPlot(opts, buildData(visibleSeries(cur, resetAtRef.current)), host);
     plotRef.current = u;
-    applyWindow(u, windowMsRef.current);
+    applyWindow(u, windowMsRef.current, resetAtRef.current);
 
     const ro = new ResizeObserver(() => u.setSize({ width: host.clientWidth, height }));
     ro.observe(host);
@@ -198,29 +210,37 @@ export const MultiChart = forwardRef<MultiChartHandle, Props>(function MultiChar
     };
   }, [dark, height, shapeKey]);
 
-  // Feed data on sample change.
+  // Feed only samples collected after the latest live-chart reset.
   useEffect(() => {
     const u = plotRef.current;
     if (!u) return;
-    u.setData(buildData(series), windowMs == null);
-    applyWindow(u, windowMs);
+    u.setData(buildData(visibleSeries(series, resetAtRef.current)), windowMs == null);
+    applyWindow(u, windowMs, resetAtRef.current);
   }, [series, windowMs]);
 
   useImperativeHandle(ref, () => ({
-    toPng: () =>
-      new Promise<Blob | null>(resolve => {
-        const u = plotRef.current;
-        if (!u) return resolve(null);
-        const src = u.ctx.canvas;
-        const out = document.createElement('canvas');
-        out.width = src.width;
-        out.height = src.height;
-        const ctx = out.getContext('2d')!;
-        ctx.fillStyle = chrome(dark).bg;
-        ctx.fillRect(0, 0, out.width, out.height);
-        ctx.drawImage(src, 0, 0);
-        out.toBlob(b => resolve(b), 'image/png');
-      }),
+    resetPlot: () => {
+      const resetAt = Date.now();
+      resetAtRef.current = resetAt;
+      const u = plotRef.current;
+      if (!u) return;
+      u.setData(buildData(visibleSeries(seriesRef.current, resetAt)), windowMsRef.current === null);
+      applyWindow(u, windowMsRef.current, resetAt);
+    },
+    toPng: async () => {
+      const u = plotRef.current;
+      if (!u) return null;
+      return chartToPng({
+        chartCanvas: u.ctx.canvas,
+        chartWidthCss: u.width,
+        dark,
+        series: seriesRef.current,
+        windowLabel: WINDOWS.find(w => w.ms === windowMsRef.current)?.label ?? 'Fit all',
+        truncated: truncated ?? false,
+        startSeconds: u.scales.x?.min ?? Number.NaN,
+        endSeconds: u.scales.x?.max ?? Number.NaN,
+      });
+    },
   }));
 
   return (
@@ -267,10 +287,12 @@ export const MultiChart = forwardRef<MultiChartHandle, Props>(function MultiChar
   );
 });
 
-// Apply the visible-window choice to the x scale (or autoscale for "fit all").
-function applyWindow(u: uPlot, windowMs: number | null): void {
+// Keep the newest sample at the right edge in a fixed window.
+// If reset emptied the plot, keep the x-axis anchored at the reset time until new data arrives.
+function applyWindow(u: uPlot, windowMs: number | null, resetAt: number | null = null): void {
+  if (windowMs === null) return;
   const xs = u.data[0];
-  if (windowMs == null || !xs || xs.length === 0) return;
-  const max = xs[xs.length - 1]!;
+  const max = xs && xs.length > 0 ? xs[xs.length - 1]! : resetAt === null ? null : resetAt / 1000;
+  if (max === null) return;
   u.setScale('x', { min: max - windowMs / 1000, max });
 }
